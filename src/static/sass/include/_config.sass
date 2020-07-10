@@ -1,0 +1,28 @@
+@charset "UTF-8"
+
+/* Основные разрешения экрана */
+
+$desktop: 1330px
+$tablet: 991px
+$mobail: 767px
+$sm-mobail: 575px
+$min-width: 320px
+
+=maxwidth($w)
+    @media only screen and (max-width: $w)
+        @content
+
+/* Используемые цвета */
+
+$black: #1C1C1C
+$carbonic: #20201F
+$darkgray: #939292
+$lightgray: #DEDEDE
+$white: #ffffff
+$red: #D00000
+
+/* Используемые шрифты */
+
+$roboto: 'Roboto'
+$sfcompact: 'SF Compact Display Regular'
+
