@@ -1,2 +1,121 @@
 @import 'config'
 
+/* Стили для обертки */
+
+.main
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+
+    &__wrapper, &__head, &__footer
+        width: 380px
+        height: 100%
+        display: flex
+
+    &__wrapper 
+        margin-top: 136px
+        flex-direction: column
+
+    &__head
+        margin-bottom: 98px
+        flex-direction: column
+        align-items: center
+
+        &-title 
+            margin-bottom: 5px
+            font: 500 47px/120% $roboto  
+            color: $black
+
+        &-subtitle 
+            font: normal 15px/120% $roboto 
+            color: $black
+
+    &__footer 
+        justify-content: center
+
+        &-link
+            margin-left: 10px
+            font: 600 17px/100% $sfcompact
+            color: $black
+            transition: .4s ease-in
+            &:hover 
+                opacity: 0.6
+
+        &-question 
+            font: 300 17px/100% $sfcompact
+            color: $darkgray
+
+/* Стили для формы */
+
+.form 
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+
+    &__input, &__button 
+        width: 100%
+
+    &__input 
+        height: 62px
+
+        label 
+            font: normal 15px/100% $sfcompact
+            color: $darkgray
+        
+        &-icon 
+            width: 25px
+            height: 25px
+
+
+    &__button 
+        height: 44px
+        margin: 30px 0 !important
+        background-color: $black !important
+        color: $white !important
+        font: 500 17px/100% $sfcompact !important
+        font-transform: uppercase !important
+
+        &:disabled 
+            background-color: $lightgray !important
+            color: $white !important
+
+.abled
+    background: url('../../icon/abled.svg') no-repeat center / contain
+
+.disabled
+    background: url('../../icon/disabled.svg') no-repeat center / contain
+
+.MuiIconButton-root
+    margin-right: -10px !important
+
+.MuiInput-underline
+    &:after
+        border-bottom: 2px solid $black !important
+
+.MuiFormLabel-root.Mui-focused
+    color: $darkgray !important
+
+/* Стили переходов между страниц */
+
+.page 
+  transition: .4s ease-in
+
+.page-enter 
+  opacity: 0
+  transform: translateX(100%)
+
+.page-enter-active 
+  opacity: 1
+  transform: translateX(0%)
+  transition: opacity .3s, transform .3s
+
+.page-exit 
+  opacity: 1
+  transform: translateX(-100%)
+
+.page-exit-active 
+  opacity: 0
+  transform: translateX(0%)
