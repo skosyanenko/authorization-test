@@ -7,6 +7,7 @@ import FormHead from './Head';
 import FormFooter from './Footer';
 import FormField from '../fields';
 import FormButton from '../ui/FormButton';
+import './index.sass';
 
 const Form = ({ id }) => {
     const {schema, fields, head, footer, button} = formConfig[id];

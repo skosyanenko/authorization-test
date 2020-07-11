@@ -1,24 +1,10 @@
-import React, { useState } from 'react';
-import { Controller } from 'react-hook-form'
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputMask from 'react-input-mask';
-
-const InputPhoneMask = ({ inputRef, onChange, ...other }) => {
-    return (
-        <InputMask
-            {...other}
-            ref={inputRef}
-            onChange={onChange}
-            mask="+7 999 999 99 99"
-        />
-    )
-};
+import React from 'react';
+import InputText from './InputText';
+import InputPhone from './InputPhone';
+import InputCheckbox from './InputCheckbox';
+import InputPassword from './InputPassword';
 
 const FormField = ({ error, register, ...inputProps }) => {
-
-    const [showPassword, setShowPassword] = useState(false);
 
     const inputClassName = cls => `${cls} ${error && error.message.length > 0 ? 'error' : ''}`;
 
@@ -26,68 +12,15 @@ const FormField = ({ error, register, ...inputProps }) => {
         switch(type) {
             case 'text':
             case 'email':
-                return (
-                    <Controller 
-                        {...inputProps}
-                        as={<TextField className={inputClassName('form__input')} />}
-                    />
-                );
+                return <InputText inputClassName={inputClassName} {...inputProps}/>
             case 'phone':
-                return (
-                    <Controller
-                        {...inputProps}
-                        as={<TextField
-                                {...inputProps}
-                                className={inputClassName('form__input')}
-                                InputProps={{
-                                    inputComponent: InputPhoneMask
-                                }}
-                            />
-                        }
-                    />
-                );
+                return <InputPhone inputClassName={inputClassName} {...inputProps}/>
             case 'checkbox':
-                return (
-                    <Controller
-                        {...inputProps}
-                        as={
-                            <div className={inputClassName('form__checkbox')}>
-                                <input id={inputProps.name} type="checkbox"/>
-                                <label htmlFor={inputProps.name}>{inputProps.label}</label>
-                            </div>
-                        }
-                    />
-                )
+                return <InputCheckbox inputClassName={inputClassName} {...inputProps}/>
             case 'password':
-                return (
-                    <Controller 
-                        {...inputProps}
-                        type={showPassword ? 'text' : 'password'}
-                        as={
-                            <TextField
-                                className={inputClassName('form__input')}
-                                InputProps={{
-                                    endAdornment:
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() => setShowPassword(!showPassword)}
-                                            >
-                                                <div className={`form__input-icon ${showPassword ? 'enabled' : 'disabled'}`}/>
-                                            </IconButton>
-                                        </InputAdornment>,
-                                }}
-                            />
-                        }
-                    />
-                );
+                return <InputPassword inputClassName={inputClassName} {...inputProps}/>
             default:
-                return (
-                    <Controller 
-                        {...inputProps}
-                        as={<TextField className={inputClassName('form__input')}/>}
-                    />
-                );
+                return <InputText inputClassName={inputClassName} {...inputProps}/>
         }
     };
 

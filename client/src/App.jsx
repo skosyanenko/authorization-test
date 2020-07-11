@@ -7,7 +7,7 @@ import './static/sass/project.sass';
 const App = () => {
     return (
         <Router>
-            <main className={`main `}>
+            <main className="main">
                 <div className="main__wrapper">
                     {routes.map(({id, path, component: Component}) => (
                         <Route path={path} exact={true} key={id}>
