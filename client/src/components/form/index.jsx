@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import { formConfig } from '../../config/form';
 import { yupResolver } from '@hookform/resolvers';
 import FormHead from './Head';
@@ -23,7 +24,11 @@ const Form = ({ id }) => {
     });
 
     const onSubmit = values => {
-	    handleSubmit(values);
+	    axios.post('/api/register', values)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err));
     };
 
     const disabled = Object.keys(errors).length > 0;
