@@ -2,11 +2,9 @@ import * as yup from "yup";
 
 export const authSchema = yup.object().shape({
     login: yup.string()
-        .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Введен неверный формат телефона')
-        .email('Введен неверный e-mail')
-        .required('Такой логин не существует'),
+        .required('Введите логин'),
     password: yup.string()
-        .required('Введен неверный пароль')
+        .required('Введите пароль')
 });
 
 export const authFields = [{

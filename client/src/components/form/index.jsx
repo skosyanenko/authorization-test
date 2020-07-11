@@ -9,8 +9,8 @@ import FormField from '../fields';
 import FormButton from '../ui/FormButton';
 import './index.sass';
 
-const Form = ({ id }) => {
-    const {schema, fields, head, footer, button} = formConfig[id];
+const Form = ({ id, history }) => {
+    const {schema, fields, head, footer, button, success, api, next} = formConfig[id];
 
     const defaultValues = fields.reduce((obj, field) => {
         obj[field.name] = '';
@@ -25,11 +25,24 @@ const Form = ({ id }) => {
     });
 
     const onSubmit = values => {
-	    axios.post('/api/register', values)
+	    axios.post(api, values)
             .then(res => {
-                console.log(res);
+                if (res.data === 'Success') {
+                    history.push('/success', { next, title: success});
+                }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const status = err.response.status;
+                let errorText = '';
+
+                if (status === 409 || status === 404) {
+                    errorText = err.response.data;
+                } else {
+                    errorText = 'Произошла неизвестная ошибка! \n' + err
+                }
+
+                alert(errorText);
+            });
     };
 
     const disabled = Object.keys(errors).length > 0;

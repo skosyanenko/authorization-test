@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.sass';
 
-const Index = ({ success, title }) => {
-    return ( 
-        <div className={`success ${success ? 'active' : ''}`}>
+const SuccessScreen = ({ location, history }) => {
+    const [title, setTitle] = useState('');
+
+    useEffect(() => {
+        if (location.state && location.state.title)
+            setTitle(location.state.title);
+
+        const timeout = setTimeout(() => {
+            if (location.state.next) {
+                history.push(location.state.next);
+            }
+        }, 4000);
+
+        return () => clearTimeout(timeout);
+    }, [location]);
+
+    return (
+        <div className={`success`}>
             <div className="success__icon">
                 <svg>
                     <path className="success__icon-circle" d="M93 0.25C41.7805 0.25 0.25 41.7805 0.25 93C0.25 144.22 41.7805 185.75 93 185.75C144.22 185.75 185.75 144.22 185.75 93C185.75 41.7805 144.22 0.25 93 0.25ZM133.061 " fill="black"/>
@@ -15,4 +30,4 @@ const Index = ({ success, title }) => {
     );
 }
  
-export default Index;
+export default SuccessScreen;

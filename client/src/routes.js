@@ -1,5 +1,5 @@
 import Form from './components/form';
-import Index from './components/Success';
+import SuccessScreen from "./components/success";
 
 export const routes = [
     {
@@ -15,6 +15,6 @@ export const routes = [
     {
         id: 'success',
         path: '/success',
-        component: Index
+        component: SuccessScreen
     }
 ];

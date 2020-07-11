@@ -38,14 +38,20 @@ const generateHash = (password) => {
 }
 
 const comparePassword = (password, hash) => {
-    bcrypt.compare(password, hash, function(err, isMatch) {
+    return bcrypt.compareSync(password, hash, function(err, isMatch) {
         if (err) throw err;
         return isMatch;
     });
 }
 
-const isUserExist = (newUser) => {
+const isLoginExist = (newUser) => {
     return getUsers().some(user => user.email === newUser.email || user.phone === newUser.phone);
+}
+
+const isUserExist = ({login, password}) => {
+    return getUsers().some(user => {
+        return (user.email === login || user.phone === login) && comparePassword(password, user.password);
+    });
 }
 
 app.post('/api/register', async (req,res) => {
@@ -57,26 +63,26 @@ app.post('/api/register', async (req,res) => {
     try {
         if (isInitialUser()) {
             result = JSON.stringify([data]);
-        } else if(!isUserExist(data)){
+        } else if(!isLoginExist(data)){
             result = JSON.stringify([...getUsers(), data]);
         } else {
             return res.status(409).send('Пользователь уже существует');
         }
 
-        await fs.writeFile(USERS_PATH, result);
+        fs.writeFileSync(USERS_PATH, result);
 
         res.status(200).send('Success');
     } catch (e) {
-        console.log(e);
         res.status(500).send('Error');
     }
 });
 
 app.post('/api/login', async (req, res) => {
-    // if (isUserExist(req.body)) {
-    //
-    // }
-    res.send(true);
+    if (isUserExist(req.body)) {
+        res.status(200).send('Success');
+    } else {
+        res.status(404).send('Пользователь не найден');
+    }
 })
 
 app.get('*', (req,res) =>{
@@ -85,4 +91,4 @@ app.get('*', (req,res) =>{
 
 app.listen(process.env.PORT || 5000);
 
-console.log('App is listening');
+console.log('App is working');

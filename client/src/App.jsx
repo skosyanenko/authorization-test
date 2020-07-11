@@ -11,15 +11,15 @@ const App = () => {
                 <div className="main__wrapper">
                     {routes.map(({id, path, component: Component}) => (
                         <Route path={path} exact={true} key={id}>
-                            {({ match }) => (
+                            {props => (
                                 <CSSTransition
-                                    in={match !== null}
+                                    in={props.match !== null}
                                     timeout={300}
                                     classNames="slide"
                                     unmountOnExit
                                 >
                                     <div className="slide">
-                                        <Component id={id}/>
+                                        <Component id={id} {...props} />
                                     </div>
                                 </CSSTransition>
                             )}

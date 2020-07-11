@@ -5,6 +5,7 @@ export const formConfig = {
     auth: {
         schema: authSchema,
         fields: authFields,
+        api: '/api/login',
         head: {
             title: 'Вход'
         },
@@ -14,11 +15,13 @@ export const formConfig = {
             label: 'Зарегистрироваться'
         },
         button: 'Войти',
-        success: 'Вы авторизованы'
+        success: 'Вы авторизованы',
+        next: false
     },
     register: {
         schema: registrationSchema,
         fields: registrationFields,
+        api: '/api/register',
         head: {
             title: 'Регистрация'
         },
@@ -28,6 +31,7 @@ export const formConfig = {
             label: 'Войти'
         },
         button: 'Зарегистрироваться',
-        success: 'Вы зарегистрированы'
+        success: 'Вы зарегистрированы',
+        next: '/auth'
     }
 }
