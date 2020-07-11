@@ -4,21 +4,30 @@ import { formConfig } from '../../config/form';
 import { yupResolver } from '@hookform/resolvers';
 import FormHead from './Head';
 import FormFooter from './Footer';
-import Input from '../fields/Input';
+import FormField from '../fields';
 import FormButton from '../ui/FormButton';
 
 const Form = ({ id }) => {
-
     const {schema, fields, head, footer, button} = formConfig[id];
 
+    const defaultValues = fields.reduce((obj, field) => {
+        obj[field.name] = '';
+        return obj;
+    }, {});
+
+    const { handleSubmit, setValue, errors, control, register } = useForm({
+        mode: 'onBlur',
+        criteriaMode: 'firstError',
+        resolver: yupResolver(schema),
+        defaultValues
+    });
+
     const onSubmit = values => {
-	    handleSubmit();
+	    handleSubmit(values);
     };
 
-    const { handleSubmit, register, setValue, getValues, errors, formState, control } = useForm({
-        resolver: yupResolver(schema)
-    });
-    
+    const disabled = Object.keys(errors).length > 0;
+
     return (
         <Fragment>
             <FormHead title={head.title}/>
@@ -27,20 +36,18 @@ const Form = ({ id }) => {
                 className="form"
             >
                 {fields.map((field, key) => (
-                    <Input 
-                        {...field} 
+                    <FormField
+                        {...field}
                         key={key}
                         register={register}
-                        getValues={getValues}
                         onChange={setValue}
                         control={control}
-                        errors={errors}
-                        isSubmit={formState.isSubmitting}
+                        error={errors[field.name]}
                     />
                 ))}
                 <FormButton 
                     text={button}
-                    disabled={errors.length > 0}
+                    disabled={disabled}
                 />
             </form>
             <FormFooter data={footer}/>

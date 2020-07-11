@@ -9,15 +9,11 @@ export const registrationSchema = yup.object().shape({
         .email('Введен неверный e-mail')
         .required('Введите e-mail'),
     phone: yup.string()
-        .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Введен неверный формат телефона')
         .required('Введите телефон'),
     password: yup.string()
-        .min(8, 'Слишком короткий - минимум 8 символов.')
-        .matches(/[a-zA-Z]/, 'Пароль должен содержать большие и маленькие буквы латинского алфавита')
-        .matches(/[0-9]/, 'Пароль должен содержать цифры')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, 'Пароль должен содержать цифры, спецсимволы, буквы латинского алфавита')
         .required('Введите пароль'),
-    agreement: yup.string()
-        .required('Подтвердите согласие')
+    agreement: yup.string().required('Подтвердите согласие')
 });
 
 export const registrationFields = [{
@@ -38,11 +34,16 @@ export const registrationFields = [{
     {
         type: 'phone',
         name: 'phone',
-        label: 'Номер телефона'
+        label: 'Телефон'
     },
     {
         type: 'password',
         name: 'password',
         label: 'Пароль'
+    },
+    {
+        type: 'checkbox',
+        name: 'agreement',
+        label: 'Я даю свое согласие на обработку персональных данных'
     }
 ];

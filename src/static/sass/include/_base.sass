@@ -2,26 +2,26 @@
 
 /* Стили для обертки */
 
+
+#root
+    height: 100%
+
 .main
     width: 100%
     height: 100%
-    display: flex
-    justify-content: center
-    align-items: center
 
-    &__wrapper, &__head, &__footer
-        width: 380px
+    &__wrapper
+        max-width: 400px
+        width: 100%
         height: 100%
+        margin: 0 auto
         display: flex
-
-    &__wrapper 
-        margin-top: 136px
+        position: relative
         flex-direction: column
 
     &__head
-        margin-bottom: 98px
-        flex-direction: column
-        align-items: center
+        margin-bottom: 78px
+        text-align: center
 
         &-title 
             margin-bottom: 5px
@@ -32,8 +32,8 @@
             font: normal 15px/120% $roboto 
             color: $black
 
-    &__footer 
-        justify-content: center
+    &__footer
+        text-align: center
 
         &-link
             margin-left: 10px
@@ -49,9 +49,7 @@
 
 /* Стили для формы */
 
-.form 
-    width: 100%
-    height: 100%
+.form
     display: flex
     flex-direction: column
 
@@ -61,7 +59,7 @@
     &__input 
         height: 62px
 
-        label 
+        label
             font: normal 15px/100% $sfcompact
             color: $darkgray
         
@@ -69,6 +67,58 @@
             width: 25px
             height: 25px
 
+        &.error
+            input
+                color: $red !important
+            .MuiInput-underline
+                &:before, &:after
+                    border-bottom: 2px solid $red !important
+
+    &__checkbox
+        margin-top: 30px
+        height: 19px
+        display: flex
+        align-items: center
+        position: relative
+
+        &.error label:before
+            border: 1px solid $red
+
+        label
+            width: 100%
+            padding: 0 0 0 30px
+            font: normal 13px/100% $sfcompact
+            color: $black
+
+            &:before
+                position: absolute
+                left: 0
+                top: 0
+                content: ''
+                max-width: 17px
+                width: 100%
+                height: 17px
+                border: 1px solid $lightgray
+
+            &:after
+                position: absolute
+                top: 3px
+                left: 3px
+                content: ''
+                width: 11px
+                height: 11px
+                background: $black
+                opacity: 0
+                transition: .2s ease-in
+
+        input[type="checkbox"]
+            display: none
+            &:checked + label:after
+                opacity: 1
+
+    &__error
+        font: normal 12px/100% $sfcompact
+        color: $red
 
     &__button 
         height: 44px
@@ -76,13 +126,13 @@
         background-color: $black !important
         color: $white !important
         font: 500 17px/100% $sfcompact !important
-        font-transform: uppercase !important
+        text-transform: uppercase !important
 
         &:disabled 
             background-color: $lightgray !important
             color: $white !important
 
-.abled
+.enabled
     background: url('../../icon/abled.svg') no-repeat center / contain
 
 .disabled
@@ -100,22 +150,34 @@
 
 /* Стили переходов между страниц */
 
-.page 
-  transition: .4s ease-in
+.slide
+    width: calc(100% - 20px)
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    margin: 0 auto
 
-.page-enter 
-  opacity: 0
-  transform: translateX(100%)
+.slide-enter,
+.slide-exit
+    transition: opacity 400ms, transform 400ms ease
 
-.page-enter-active 
-  opacity: 1
-  transform: translateX(0%)
-  transition: opacity .3s, transform .3s
+.slide-enter
+    opacity: 0
+    transform: translateX(100%)
 
-.page-exit 
-  opacity: 1
-  transform: translateX(-100%)
+.slide-enter.slide-enter-active
+    opacity: 1
+    transform: translateX(0%)
 
-.page-exit-active 
-  opacity: 0
-  transform: translateX(0%)
+.slide-exit
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    transform: translateX(0%)
+
+
+.slide-exit-active
+    transform: translateX(-100%)
+    opacity: 0
