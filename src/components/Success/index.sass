@@ -1,0 +1,59 @@
+@import '../../static/sass/include/config'
+
+.success
+    height: fit-content
+    margin: 35% 0
+    display: none
+    align-items: center
+    flex-direction: column
+
+    &.active
+        display: flex
+
+    &__icon
+        width: 186px
+        height: 186px
+
+        &-circle
+            opacity: 0
+            animation: showCircle 2s forwards
+            transition: all ease-in
+
+        &-line
+            fill: transparent
+            animation: showIcon 2s linear forwards
+            transition: all ease-in
+            animation-delay: 1s
+
+        svg
+            width: 100%
+            height: 100%
+
+    &__title
+        width: max-content
+        margin-top: 120px
+        font: 500 40px/100% $roboto
+        color: $black
+        opacity: 0
+        animation: showCircle 2s forwards
+        animation-delay: 2s
+        transition: all ease-in
+        +maxwidth($mobail)
+            font-size: 30px
+            text-align: center
+        +maxwidth($sm-mobail)
+            font-size: 28px
+
+.showIcon
+    animation-name: showIcon
+
+@keyframes showIcon
+    to
+        fill: $white
+
+.showCircle
+    animation-name: showCircle
+
+@keyframes showCircle
+    to
+        opacity: 1
